@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Molecular Explorer</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#3a6ea5;font:12px Tahoma,Verdana,sans-serif;color:#000;display:flex;flex-direction:column;overflow:hidden}
+#win{flex:1;display:flex;flex-direction:column;background:#ece9d8;border:2px outset #fff;min-height:0}
+#title{background:linear-gradient(#0a5fe0,#3d95ff 8%,#0058ee 40%,#0049c8);color:#fff;font-weight:bold;padding:4px 6px;display:flex;justify-content:space-between;font-size:13px;text-shadow:1px 1px #000}
+#title b{font-size:11px;background:#d4442a;border:1px solid #fff;border-radius:3px;padding:0 5px}
+#menu{display:flex;gap:12px;padding:2px 8px;border-bottom:1px solid #aca899;overflow-x:auto;white-space:nowrap}
+#menu span{cursor:default;padding:1px 3px}#menu span:hover{background:#316ac5;color:#fff}
+#tabs{display:flex;align-items:flex-end;background:#d4d0c8;padding:4px 4px 0;gap:2px;overflow-x:auto;border-bottom:2px solid #fff}
+.tab{display:flex;align-items:center;gap:5px;min-width:110px;max-width:170px;padding:4px 6px;background:#c8c4b8;border:1px solid #808080;border-bottom:none;border-radius:4px 4px 0 0;cursor:pointer;user-select:none;white-space:nowrap}
+.tab.active{background:#fff;font-weight:bold;border-color:#316ac5}
+.tab.over{outline:2px dashed #316ac5}
+.tab span.t{flex:1;overflow:hidden;text-overflow:ellipsis}
+.tab .x{border:1px solid transparent;padding:0 3px;font-weight:bold;color:#444}.tab .x:hover{background:#d4442a;color:#fff}
+#newtab{padding:3px 9px;border:1px outset #fff;background:#ece9d8;cursor:pointer;margin-bottom:2px;font-weight:bold}
+#tool{display:flex;align-items:center;gap:4px;padding:4px;border-bottom:1px solid #aca899;flex-wrap:wrap}
+.btn{border:1px solid transparent;background:none;padding:3px 7px;font:inherit;cursor:pointer;border-radius:3px}
+.btn:hover:not(:disabled){border-color:#888;background:#f6f4ea}.btn:active:not(:disabled){border-style:inset}.btn:disabled{color:#999}
+#addr{flex:1;min-width:140px;display:flex;align-items:center;gap:4px}
+#addr input{flex:1;border:2px inset #fff;padding:3px;font:12px Tahoma;min-width:0}
+#go{border:1px outset #fff;background:#ece9d8;padding:2px 8px;cursor:pointer}
+#throb{width:30px;height:26px;background:#fff;border:1px inset #aaa;text-align:center;font-size:18px}
+#throb.spin{animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+#body{flex:1;display:flex;min-height:0}
+#side{width:190px;background:#f1efe2;border-right:2px groove #fff;padding:6px;overflow:auto;display:none}
+#side h4{margin:0 0 6px;background:#316ac5;color:#fff;padding:3px}
+#side a{display:block;padding:2px 0}
+#page{flex:1;background:#fff;overflow:auto;border:2px inset #fff;margin:2px}
+#status{display:flex;gap:6px;border-top:1px solid #aca899;padding:2px 6px;font-size:11px}
+#status div{border:1px inset #fff;padding:1px 6px}#st{flex:1}
+#bar{width:100px;height:12px;border:1px inset #888;align-self:center;padding:0}#bar i{display:block;height:100%;width:0;background:repeating-linear-gradient(90deg,#2a5ccf 0 6px,#fff 6px 8px)}
+a{color:#0000cc;cursor:pointer}a:visited{color:#551a8b}
+.home{max-width:700px;margin:0 auto;padding:24px 14px;text-align:center}
+.logo{font:italic bold 46px "Comic Sans MS",Georgia,serif;color:#1a4fd0;text-shadow:3px 3px #ff9900,5px 5px #999;letter-spacing:-1px;margin:10px 0 2px}
+.logo small{display:block;font:11px Verdana;color:#555;text-shadow:none;letter-spacing:0;font-style:normal}
+.sb{position:relative;margin:18px auto;max-width:520px}
+.sb input{width:100%;padding:8px;font:15px Arial;border:2px inset #ccc}
+.sug{position:absolute;left:0;right:0;top:100%;background:#ffffe1;border:1px solid #000;text-align:left;z-index:9;display:none}
+.sug div{padding:3px 8px;cursor:pointer}.sug div:hover,.sug .sel{background:#316ac5;color:#fff}
+.b95{border:2px outset #fff;background:#ece9d8;padding:5px 12px;font:12px Tahoma;cursor:pointer;margin:4px}.b95:active{border-style:inset}
+.mq{background:#000080;color:#ff0;padding:3px;margin:10px 0;font-weight:bold}
+.box{border:2px groove #ccc;background:#ffffe1;padding:8px;margin:12px 0;text-align:left}
+.cats a{margin:0 8px;white-space:nowrap}
+.cnt{display:inline-block;background:#000;color:#0f0;font:bold 14px "Courier New";padding:1px 5px;letter-spacing:2px;border:2px inset #888}
+.res{max-width:720px;margin:0 auto;padding:10px 14px}
+.res h3{margin:12px 0 0;font-size:15px}.res .u{color:#008000;font-size:11px}
+.rh{background:#e4ecf8;border-bottom:1px solid #9ab;padding:6px 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rh .logo{font-size:22px;margin:0;text-shadow:1px 1px #ff9900;cursor:pointer}
+.rh input{flex:1;min-width:120px;padding:3px;border:2px inset #ccc;font:13px Arial}
+table.info{border-collapse:collapse;width:100%;margin:8px 0}
+.info td{border:1px solid #888;padding:4px 8px}.info td:first-child{background:#d4e0f4;font-weight:bold;width:38%}
+.mol{max-width:760px;margin:0 auto;padding:10px 14px}
+.mol h1{font:bold 28px Georgia;color:#1a4fd0;border-bottom:3px double #1a4fd0;margin:6px 0}
+.view{display:flex;gap:12px;flex-wrap:wrap}
+canvas{background:radial-gradient(#223,#000);border:3px inset #888;max-width:100%;cursor:grab}
+.tag{display:inline-block;background:#ff9900;color:#000;padding:0 5px;font-size:10px;font-weight:bold}
+.new{color:red;font-weight:bold;animation:bl 1s steps(2) infinite}@keyframes bl{50%{opacity:0}}
+.bad{text-align:center;padding:30px}
+</style></head><body>
+<div id="win">
+<div id="title"><span>⚛ Molecular Explorer - Microsoft Molecular Explorer</span><b>X</b></div>
+<div id="menu"><span>File</span><span>Edit</span><span>View</span><span id="mf">Favorites</span><span>Tools</span><span id="mh">Help</span></div>
+<div id="tabs"></div>
+<div id="tool">
+<button class="btn" id="bk">◀ Back</button><button class="btn" id="fw">Forward ▶</button><button class="btn" id="rf">⟳ Refresh</button><button class="btn" id="hm">🏠 Home</button><button class="btn" id="sd">★ Favorites</button>
+<div id="addr"><span>Address</span><input id="ai" spellcheck="false"><button id="go">Go</button></div><div id="throb">⚛</div>
+</div>
+<div id="body"><div id="side"></div><div id="page"></div></div>
+<div id="status"><div id="st">Done</div><div id="bar"><i></i></div><div>🌐 Molecule Zone</div><div id="clk"></div></div>
+</div>
+<script>
+// name, formula, mass, mp°C, bp°C, category, description, aliases, 3D key
+const DB=[
+["Water","H₂O",18.015,0,100,"Inorganic","The universal solvent. Bent molecule (104.5°) with strong hydrogen bonding, essential for all known life.","h2o dihydrogen monoxide","w"],
+["Carbon dioxide","CO₂",44.01,-78.5,"sublimes","Inorganic","Linear gas exhaled in respiration, used by plants in photosynthesis and a major greenhouse gas.","co2 dry ice","c2"],
+["Methane","CH₄",16.04,-182.5,-161.5,"Organic","Simplest alkane and the main component of natural gas. Tetrahedral geometry.","ch4 natural gas","m"],
+["Ammonia","NH₃",17.03,-77.7,-33.3,"Inorganic","Pungent gas, key to fertilizers, made industrially via the Haber-Bosch process.","nh3","a"],
+["Hydrogen","H₂",2.016,-259.2,-252.9,"Element","Lightest molecule. Promising clean fuel.","h2","h"],
+["Oxygen","O₂",31.998,-218.8,-183,"Element","Diatomic gas making up ~21% of air; needed for aerobic respiration and combustion.","o2 dioxygen","o"],
+["Nitrogen","N₂",28.014,-210,-195.8,"Element","Triple-bonded, very stable gas making up ~78% of the atmosphere.","n2 dinitrogen","n"],
+["Ozone","O₃",47.998,-192.2,-112,"Inorganic","Bent allotrope of oxygen forming the stratospheric layer that absorbs UV light.","o3","z"],
+["Ethene","C₂H₄",28.05,-169.2,-103.7,"Organic","Also called ethylene. A plant hormone and the most produced organic compound (plastics).","ethylene c2h4","e"],
+["Benzene","C₆H₆",78.11,5.5,80.1,"Organic","Aromatic ring of six carbons with delocalized electrons. A classic solvent; toxic and carcinogenic.","c6h6 aromatic","bz"],
+["Ethanol","C₂H₅OH",46.07,-114.1,78.4,"Organic","Alcohol in beverages, widely used as solvent and biofuel.","alcohol ethyl alcohol c2h5oh",""],
+["Acetone","C₃H₆O",58.08,-94.7,56.1,"Organic","Simplest ketone; the main ingredient of nail polish remover.","propanone c3h6o",""],
+["Acetic acid","CH₃COOH",60.05,16.6,118.1,"Organic","Gives vinegar its sour taste and smell.","vinegar ethanoic acid ch3cooh",""],
+["Glucose","C₆H₁₂O₆",180.16,146,"decomposes","Biomolecule","Primary energy source for cells, produced by photosynthesis.","dextrose sugar blood sugar c6h12o6",""],
+["Sucrose","C₁₂H₂₂O₁₁",342.3,186,"decomposes","Biomolecule","Table sugar: glucose and fructose joined by a glycosidic bond.","table sugar",""],
+["Caffeine","C₈H₁₀N₄O₂",194.19,235,"sublimes","Drug","Stimulant alkaloid from coffee, tea and cacao; blocks adenosine receptors.","coffee tea",""],
+["Aspirin","C₉H₈O₄",180.16,135,140,"Drug","Acetylsalicylic acid, an anti-inflammatory painkiller first synthesized in 1897.","acetylsalicylic acid",""],
+["Sodium chloride","NaCl",58.44,801,1413,"Salt","Common table salt with a cubic ionic crystal lattice.","salt halite",""],
+["Sulfuric acid","H₂SO₄",98.08,10,337,"Inorganic","Highly corrosive strong acid; the most produced industrial chemical.","oil of vitriol",""],
+["Hydrochloric acid","HCl",36.46,-27.3,48,"Inorganic","Strong acid found in stomach acid at low concentration.","muriatic acid",""],
+["Dopamine","C₈H₁₁NO₂",153.18,128,"-","Biomolecule","Neurotransmitter tied to reward, motivation and movement.","neurotransmitter",""],
+["Cholesterol","C₂₇H₄₆O",386.65,148,360,"Biomolecule","Steroid lipid in cell membranes and a precursor of hormones.","steroid",""],
+["Ethylene glycol","C₂H₆O₂",62.07,-12.9,197.3,"Organic","Sweet, toxic liquid used in antifreeze.","antifreeze",""],
+["Vitamin C","C₆H₈O₆",176.12,190,"decomposes","Vitamin","Ascorbic acid, an antioxidant needed to prevent scurvy.","ascorbic acid",""]
+];
+const R={H:.31,C:.76,N:.71,O:.66},COL={H:"#eee",C:"#555",N:"#36f",O:"#e22"};
+const XYZ={
+w:[["O",0,0,0],["H",.76,.59,0],["H",-.76,.59,0]],
+c2:[["C",0,0,0],["O",1.16,0,0],["O",-1.16,0,0]],
+m:[["C",0,0,0],["H",.63,.63,.63],["H",-.63,-.63,.63],["H",-.63,.63,-.63],["H",.63,-.63,-.63]],
+a:[["N",0,0,.12],["H",.94,0,-.27],["H",-.47,.81,-.27],["H",-.47,-.81,-.27]],
+h:[["H",.37,0,0],["H",-.37,0,0]],o:[["O",.6,0,0],["O",-.6,0,0]],n:[["N",.55,0,0],["N",-.55,0,0]],
+z:[["O",0,.3,0],["O",1.09,-.3,0],["O",-1.09,-.3,0]],
+e:[["C",.67,0,0],["C",-.67,0,0],["H",1.24,.92,0],["H",1.24,-.92,0],["H",-1.24,.92,0],["H",-1.24,-.92,0]],
+bz:[...[0,1,2,3,4,5].flatMap(i=>{let a=i*Math.PI/3;return[["C",1.4*Math.cos(a),1.4*Math.sin(a),0],["H",2.48*Math.cos(a),2.48*Math.sin(a),0]]})]};
+const CATS=["Inorganic","Organic","Element","Biomolecule","Drug","Salt","Vitamin"];
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let tabs=[],act=null,uid=0,favs=[],raf=0,dragId=null;
+try{favs=JSON.parse(localStorage.getItem("mx_favs")||"[]")}catch(e){}
+function saveFav(){try{localStorage.setItem("mx_favs",JSON.stringify(favs))}catch(e){}}
+const find=n=>DB.find(m=>m[0]===n);
+function search(q){q=q.toLowerCase().trim();if(!q)return[];
+ const plain=m=>(m[0]+" "+m[1]+" "+m[7]+" "+m[5]).toLowerCase().replace(/[₀-₉]/g,c=>c.charCodeAt(0)-8320);
+ return DB.map(m=>{const p=plain(m),n=m[0].toLowerCase();let s=0;
+  if(n===q)s=100;else if(n.startsWith(q))s=80;else if(p.includes(q))s=50;else if(q.split(/\s+/).every(w=>p.includes(w)))s=30;
+  return[s,m]}).filter(x=>x[0]).sort((a,b)=>b[0]-a[0]).map(x=>x[1])}
+function newTab(state){const t={id:++uid,h:[state||{v:"home"}],i:0};tabs.push(t);act=t.id;draw();return t}
+const cur=()=>tabs.find(t=>t.id===act),st=t=>t.h[t.i];
+function go(state,t){t=t||cur();t.h=t.h.slice(0,t.i+1);t.h.push(state);t.i++;load(t)}
+function load(t){busy(true);setTimeout(()=>{busy(false);draw()},350)}
+let bt;function busy(on){const b=$("#bar i");clearInterval(bt);$("#throb").classList.toggle("spin",on);$("#st").textContent=on?"Opening page...":"Done";
+ if(on){let w=0;bt=setInterval(()=>{w=Math.min(100,w+14);b.style.width=w+"%"},40)}else b.style.width="0"}
+function title(s){return s.v==="home"?"Molecular Explorer":s.v==="res"?"Search: "+s.q:s.m}
+function icon(s){return s.v==="home"?"⚛":s.v==="res"?"🔍":"🧪"}
+function addr(s){return s.v==="home"?"molecular://home":s.v==="res"?"molecular://search?q="+encodeURIComponent(s.q):"molecular://molecule/"+encodeURIComponent(s.m.toLowerCase().replace(/ /g,"-"))}
+function drawTabs(){const el=$("#tabs");el.innerHTML="";
+ tabs.forEach(t=>{const d=document.createElement("div");d.className="tab"+(t.id===act?" active":"");d.draggable=true;
+  d.innerHTML=`<span>${icon(st(t))}</span><span class="t">${esc(title(st(t)))}</span><span class="x" title="Close tab">✕</span>`;
+  d.onclick=e=>{if(e.target.classList.contains("x")){closeTab(t.id)}else{act=t.id;draw()}};
+  d.ondragstart=e=>{dragId=t.id;e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/plain",t.id)};
+  d.ondragover=e=>{e.preventDefault();d.classList.add("over")};d.ondragleave=()=>d.classList.remove("over");
+  d.ondrop=e=>{e.preventDefault();const f=tabs.findIndex(x=>x.id===dragId),to=tabs.findIndex(x=>x.id===t.id);
+   if(f>-1&&f!==to){const[m]=tabs.splice(f,1);tabs.splice(to,0,m)}draw()};
+  d.ondragend=()=>draw();el.appendChild(d)});
+ const n=document.createElement("div");n.id="newtab";n.textContent="＋";n.title="New tab";n.onclick=()=>newTab();el.appendChild(n)}
+function closeTab(id){const i=tabs.findIndex(t=>t.id===id);tabs.splice(i,1);
+ if(!tabs.length)return newTab();if(act===id)act=tabs[Math.min(i,tabs.length-1)].id;draw()}
+function draw(){drawTabs();const t=cur(),s=st(t);$("#ai").value=addr(s);document.title=title(s)+" - Molecular Explorer";
+ $("#bk").disabled=t.i<1;$("#fw").disabled=t.i>=t.h.length-1;
+ const p=$("#page");cancelAnimationFrame(raf);
+ p.innerHTML=s.v==="home"?home():s.v==="res"?results(s.q):molPage(s.m);p.scrollTop=0;wire();drawSide();
+ if(s.v==="mol")viewer(find(s.m))}
+function sbox(v){return `<div class="sb"><input class="q" value="${esc(v||"")}" placeholder="Search molecules, e.g. caffeine, H2O, vinegar..." autocomplete="off"><div class="sug"></div></div>`}
+function home(){const d=DB[Math.floor(Date.now()/864e5)%DB.length];
+ return `<div class="home"><div class="logo">Molecular Explorer<small>~ The Web's #1 Molecule Search Engine ~ est. 1997 ~</small></div>
+ ${sbox()}<div><button class="b95" data-act="s">Molecule Search</button><button class="b95" data-act="l">I'm Feeling Lucky</button><button class="b95" data-act="all">Browse All</button></div>
+ <div class="mq"><marquee scrollamount="5">★ Welcome to Molecular Explorer! ★ Over ${DB.length} molecules indexed! ★ Drag tabs to rearrange them! ★ Sign our guestbook! ★</marquee></div>
+ <div class="box"><span class="new">NEW!</span> <b>Molecule of the Day:</b> <a data-m="${esc(d[0])}">${esc(d[0])}</a> (${d[1]})<br>${esc(d[6])}</div>
+ <p class="cats"><b>Directory:</b><br>${CATS.map(c=>`<a data-q="${c}">${c}</a>`).join(" | ")}</p>
+ <p>You are visitor number <span class="cnt">${String(1337+Math.floor(Date.now()/36e5)%9000).padStart(6,"0")}</span></p>
+ <p style="font-size:10px;color:#666">Best viewed with Molecular Explorer 6.0 at 800×600 • © 1999-2026 Molecular Explorer Inc. • <a data-act="all">Sitemap</a></p></div>`}
+function results(q){const r=search(q);
+ return `<div class="rh"><span class="logo" data-act="home">Molecular Explorer</span>${sbox(q).replace('class="sb"','class="sb" style="flex:1;margin:0;max-width:none;min-width:140px"')}<button class="b95" data-act="s">Search</button></div>
+ <div class="res"><div style="background:#d4e0f4;padding:3px 6px">Searched for <b>${esc(q)}</b> — ${r.length} result${r.length==1?"":"s"}</div>
+ ${r.length?r.map(m=>`<h3><a data-m="${esc(m[0])}">${esc(m[0])} (${m[1]})</a> <span class="tag">${m[5]}</span></h3><div>${esc(m[6])}</div><div class="u">molecular://molecule/${esc(m[0].toLowerCase().replace(/ /g,"-"))} - Mass ${m[2]} g/mol</div>`).join("")
+ :`<div class="bad"><h2>😢 No molecules found</h2>Try: ${["water","caffeine","glucose","benzene"].map(x=>`<a data-q="${x}">${x}</a>`).join(", ")}<br>or check your spelling.</div>`}</div>`}
+function molPage(n){const m=find(n),isF=favs.includes(n),rel=DB.filter(x=>x[5]===m[5]&&x!==m).slice(0,5);
+ return `<div class="rh"><span class="logo" data-act="home">Molecular Explorer</span>${sbox().replace('class="sb"','class="sb" style="flex:1;margin:0;max-width:none;min-width:140px"')}<button class="b95" data-act="s">Search</button></div>
+ <div class="mol"><h1>${esc(m[0])} <span class="tag">${m[5]}</span></h1>
+ <div class="view"><div>${XYZ[m[8]]?`<canvas id="cv" width="280" height="260"></canvas><div style="font-size:10px">🖱 Drag to rotate • <a id="sp">Pause</a></div>`:`<div class="box" style="width:280px;height:260px;text-align:center;padding-top:90px"><span style="font-size:36px">${m[1]}</span><br>3D model not in archive yet</div>`}</div>
+ <div style="flex:1;min-width:240px"><p>${esc(m[6])}</p><table class="info">
+ <tr><td>Formula</td><td>${m[1]}</td></tr><tr><td>Molar mass</td><td>${m[2]} g/mol</td></tr><tr><td>Melting point</td><td>${m[3]}${typeof m[3]=="number"?" °C":""}</td></tr><tr><td>Boiling point</td><td>${m[4]}${typeof m[4]=="number"?" °C":""}</td></tr>
+ <tr><td>Category</td><td><a data-q="${m[5]}">${m[5]}</a></td></tr><tr><td>State at 25°C</td><td>${typeof m[3]!="number"?"Solid":m[3]>25?"Solid":m[4]<25?"Gas":"Liquid"}</td></tr></table>
+ <button class="b95" data-fav="${esc(n)}">${isF?"★ Remove favorite":"☆ Add to Favorites"}</button><button class="b95" data-act="print">🖨 Print</button></div></div>
+ ${rel.length?`<div class="box"><b>Related molecules:</b> ${rel.map(x=>`<a data-m="${esc(x[0])}">${esc(x[0])}</a>`).join(" • ")}</div>`:""}</div>`}
+function wire(){const p=$("#page"),inp=p.querySelector(".q");
+ const doS=()=>{const v=inp.value.trim();if(!v)return;const r=search(v);if(r.length&&r[0][0].toLowerCase()===v.toLowerCase())go({v:"mol",m:r[0][0]});else go({v:"res",q:v})};
+ if(inp){let sel=-1;const sg=p.querySelector(".sug");
+  inp.oninput=()=>{sel=-1;const r=search(inp.value).slice(0,6);sg.style.display=r.length&&inp.value?"block":"none";
+   sg.innerHTML=r.map(m=>`<div data-v="${esc(m[0])}">${esc(m[0])} <small>${m[1]}</small></div>`).join("");
+   sg.querySelectorAll("div").forEach(d=>d.onmousedown=()=>{inp.value=d.dataset.v;sg.style.display="none";doS()})};
+  inp.onkeydown=e=>{const it=[...sg.querySelectorAll("div")];
+   if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();sel=(sel+(e.key==="ArrowDown"?1:-1)+it.length)%(it.length||1);it.forEach((d,i)=>d.classList.toggle("sel",i===sel));if(it[sel])inp.value=it[sel].dataset.v}
+   else if(e.key==="Enter")doS();else if(e.key==="Escape")sg.style.display="none"};
+  inp.onblur=()=>setTimeout(()=>sg.style.display="none",150);if(st(cur()).v==="home")inp.focus()}
+ p.onclick=e=>{const a=e.target.closest("[data-m],[data-q],[data-act],[data-fav],#sp");if(!a)return;
+  if(a.dataset.m)go({v:"mol",m:a.dataset.m});else if(a.dataset.q)go({v:"res",q:a.dataset.q});
+  else if(a.dataset.fav){const n=a.dataset.fav;favs=favs.includes(n)?favs.filter(x=>x!==n):[...favs,n];saveFav();draw()}
+  else if(a.id==="sp"){spin=!spin;a.textContent=spin?"Pause":"Resume"}
+  else{const k=a.dataset.act;if(k==="s")doS();else if(k==="l")go({v:"mol",m:DB[Math.floor(Math.random()*DB.length)][0]});
+   else if(k==="all")go({v:"res",q:"a"});else if(k==="home")go({v:"home"});else if(k==="print")window.print()}}}
+let spin=true;
+function viewer(m){const cv=$("#cv");if(!cv)return;const ctx=cv.getContext("2d"),at=XYZ[m[8]];spin=true;
+ let ax=.4,ay=0,dr=false,lx,ly;const W=cv.width,H=cv.height,sc=Math.min(W,H)/(at.reduce((a,b)=>Math.max(a,Math.hypot(b[1],b[2],b[3])),0)+1.2)/2.4*1.1;
+ cv.onmousedown=e=>{dr=true;lx=e.clientX;ly=e.clientY};window.onmouseup=()=>dr=false;
+ cv.onmousemove=e=>{if(dr){ay+=(e.clientX-lx)*.01;ax+=(e.clientY-ly)*.01;lx=e.clientX;ly=e.clientY}};
+ cv.ontouchstart=e=>{dr=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY};cv.ontouchend=()=>dr=false;
+ cv.ontouchmove=e=>{e.preventDefault();ay+=(e.touches[0].clientX-lx)*.01;ax+=(e.touches[0].clientY-ly)*.01;lx=e.touches[0].clientX;ly=e.touches[0].clientY};
+ (function f(){if(spin&&!dr)ay+=.012;ctx.clearRect(0,0,W,H);
+  const P=at.map(([el,x,y,z])=>{let a=x*Math.cos(ay)+z*Math.sin(ay),c=-x*Math.sin(ay)+z*Math.cos(ay),b=y*Math.cos(ax)-c*Math.sin(ax),d=y*Math.sin(ax)+c*Math.cos(ax);
+   return{el,x:W/2+a*sc*2,y:H/2+b*sc*2,z:d}});
+  const items=[];P.forEach((a,i)=>{items.push({t:"a",z:a.z,a});for(let j=i+1;j<P.length;j++){const o=at[i],q=at[j];
+   if(Math.hypot(o[1]-q[1],o[2]-q[2],o[3]-q[3])<(R[o[0]]+R[q[0]])*1.25)items.push({t:"b",z:(a.z+P[j].z)/2-.01,a,b:P[j]})}});
+  items.sort((p,q)=>p.z-q.z).forEach(it=>{if(it.t==="b"){ctx.strokeStyle="#bbb";ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(it.a.x,it.a.y);ctx.lineTo(it.b.x,it.b.y);ctx.stroke()}
+   else{const a=it.a,r=(a.el==="H"?11:17)*(1+a.z*.08),g=ctx.createRadialGradient(a.x-r/3,a.y-r/3,1,a.x,a.y,r);g.addColorStop(0,"#fff");g.addColorStop(.35,COL[a.el]);g.addColorStop(1,"#000");
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(a.x,a.y,r,0,7);ctx.fill()}});
+  raf=requestAnimationFrame(f)})()}
+function drawSide(){const s=$("#side");s.innerHTML=`<h4>★ Favorites</h4>`+(favs.length?favs.map(n=>`<a data-fm="${esc(n)}">🧪 ${esc(n)}</a>`).join(""):"<i>No favorites yet. Open a molecule and click ☆.</i>");
+ s.querySelectorAll("[data-fm]").forEach(a=>a.onclick=()=>go({v:"mol",m:a.dataset.fm}))}
+function nav(d){const t=cur(),n=t.i+d;if(n>=0&&n<t.h.length){t.i=n;load(t)}}
+$("#bk").onclick=()=>nav(-1);$("#fw").onclick=()=>nav(1);$("#rf").onclick=()=>load(cur());$("#hm").onclick=()=>go({v:"home"});
+$("#sd").onclick=$("#mf").onclick=()=>{const s=$("#side");s.style.display=s.style.display==="block"?"none":"block"};
+$("#mh").onclick=()=>alert("Molecular Explorer 6.0\nTips: open tabs with ＋, drag them to reorder, ✕ to close.\nSearch by name, formula (H2O) or nickname (vinegar).");
+const goAddr=()=>{const v=$("#ai").value.trim().replace(/^molecular:\/\//,"");if(!v||v==="home")return go({v:"home"});
+ const q=v.replace(/^search\?q=/,"").replace(/^molecule\//,"").replace(/-/g," ");const r=search(decodeURIComponent(q));
+ if(r.length&&r[0][0].toLowerCase()===decodeURIComponent(q).toLowerCase())go({v:"mol",m:r[0][0]});else go({v:"res",q:decodeURIComponent(q)})};
+$("#go").onclick=goAddr;$("#ai").onkeydown=e=>{if(e.key==="Enter")goAddr()};$("#ai").onfocus=e=>e.target.select();
+setInterval(()=>$("#clk").textContent=new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"}),1000);
+$("#clk").textContent=new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
+newTab();
+</script></body></html>
