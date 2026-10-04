@@ -22,7 +22,7 @@ body{background:#000;font:12px Tahoma,Verdana,sans-serif;color:#000;display:flex
 .note{width:230px;height:230px;background:url(Image/sticky_note.png) center/100% 100% no-repeat;filter:drop-shadow(4px 6px 5px #0007);transform:rotate(-2deg)}
 .note.fb{background:#fff59d}
 .nbar{height:34px;flex-shrink:0;display:flex;justify-content:flex-end;padding:6px 14px 0;cursor:move;touch-action:none}
-.note .ctl b,.note .ctl b:last-child{background:#0002;border:0;color:#333;width:18px;height:18px;font-size:11px}
+.note .ctl b,.note .ctl b:last-child{background:none;border:0;color:#333;width:18px;height:18px;font-size:11px}
 .note textarea{flex:1;margin:0 20px 22px;background:none;border:0;outline:0;resize:none;font:17px "Segoe Print","Bradley Hand","Comic Sans MS",cursive;color:#222}
 #taskbar{height:34px;flex-shrink:0;background:linear-gradient(#245edb,#3f8cf3 8%,#245edb 50%,#1c4fc0 92%,#1941a5);display:flex;align-items:center;position:relative;z-index:99998}
 #start{height:100%;background:linear-gradient(#5cc05c,#3c9a3c 20%,#2f8f2f);border-radius:0 14px 14px 0;color:#fff;font:italic bold 18px "Trebuchet MS",Tahoma;padding:0 18px 0 10px;display:flex;align-items:center;gap:6px;cursor:pointer;text-shadow:1px 1px 2px #000;box-shadow:2px 0 4px #0006}
@@ -102,11 +102,57 @@ canvas{background:radial-gradient(#223,#000);border:3px inset #888;max-width:100
 .tag{display:inline-block;background:#ff9900;color:#000;padding:0 5px;font-size:10px;font-weight:bold}
 .new{color:red;font-weight:bold;animation:bl 1s steps(2) infinite}@keyframes bl{50%{opacity:0}}
 .bad{text-align:center;padding:30px}
+
+.ctl b:focus-visible,#mf:focus-visible,#mh:focus-visible{outline:2px solid #ff0}
+.note .ctl b{box-shadow:none;border-radius:0}
+@media(max-width:700px){
+ .w.win:not(.wa){left:0!important;top:0!important;width:100%!important;height:100%!important;border-width:0;border-radius:0;cursor:auto!important}
+ .w.win:not(.wa) [data-c=max]{display:none}.w.wa{left:0!important;top:8px!important}
+ #icons{display:none}.home2 .atm{display:none}#atomy{transform:scale(.8);transform-origin:bottom right}}
+/* home */
+.home2{position:relative;min-height:100%;display:flex;flex-direction:column;align-items:center;padding:30px 14px 0;overflow:hidden;text-align:center}
+.home2>*{position:relative;z-index:1}
+.home2 .orb{position:absolute;left:150px;top:200px;width:900px;height:900px;z-index:0;pointer-events:none}
+.home2 .atm{position:absolute;left:20px;top:60px;width:170px;height:170px;z-index:0}
+.logo2{font:italic bold 46px Georgia,serif;color:#1a4fd0;text-shadow:3px 3px #a9b6ff;letter-spacing:2px}
+.sub2{font:bold 10px Verdana;color:#555}
+.home2 .sb{width:min(520px,90%)}.home2 .sb input{padding:8px 40px 8px 10px;border:1px solid #444;background:#fff}
+.arr{position:absolute;right:12px;top:8px;cursor:pointer;font-size:18px}
+.bx2{border:1px solid #999;background:#fffbe6;padding:10px 12px;width:min(320px,90%);margin-top:22px;text-align:left;min-height:56px}
+.vis{color:#2a8a2a;font-size:11px;margin-top:26px}
+.mq2{margin-top:auto;border:2px solid #1a4fd0;color:#1a4fd0;width:100%;font:11px Verdana;padding:2px 0}
+/* paint */
+.pt{gap:14px;padding:8px 12px;border-bottom:1px solid #aca899;align-items:center}
+.pt .btn{font:bold 15px Georgia,serif;color:#222;padding:2px 4px;border-radius:0}
+.pt .btn.on{border:0;border-bottom:3px solid #1a4fd0;background:none}
+.pt .sz{font:bold 15px Georgia,serif;border:0;background:none}.pt .cur{display:none}
+.pal{justify-content:center;gap:8px;padding:6px;border-top:1px solid #aca899}.pal i{width:8px;height:22px;border:0;border-radius:6px}
+/* winamp */
+.wa{max-width:100%}
+.wab{background:#f4f1e4;flex:1;padding:12px;display:grid;grid-template-columns:1fr 1.6fr;gap:10px 14px;overflow:hidden;align-content:start}
+.walcd{border:2px solid #333;background:#fff;padding:6px;position:relative;height:100px}
+.wat{font:bold 38px "Courier New",monospace;color:#3a4fc0;text-align:right;white-space:nowrap}
+.wav{position:absolute;left:6px;right:6px;bottom:6px;height:34px;display:flex;align-items:flex-end;gap:3px}
+.wav i{flex:1;height:10%;background:#3a4fc0;border-radius:3px}
+.wabx{border:2px solid #333;background:#fff;color:#3a4fc0;padding:2px 8px;font:14px "Courier New",monospace}
+.wari{display:flex;flex-direction:column;gap:8px;min-width:0}.wtitle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.war,.wsl{display:flex;align-items:center;gap:8px}.wsl input{flex:1;min-width:0}
+.wtg{width:26px;height:16px;border:2px solid #333;background:#fff;cursor:pointer;padding:0}.wtg[aria-pressed=true]{background:#3a4fc0}
+.wabt{grid-column:1/-1;display:flex;border:2px solid #333;width:max-content}
+.wabt button{width:56px;height:36px;border:0;border-right:2px solid #333;background:#fff;font-size:16px;cursor:pointer}.wabt button:last-child{border:0}
+.wabt button:hover{background:#e4e8ff}
+/* atomy */
+#atomy{position:absolute;right:12px;bottom:10px;z-index:99000;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none}
+#atomy>*{pointer-events:auto}
+.abub{display:none;position:relative;max-width:230px;background:#ffffe1;border:1px solid #000;border-radius:8px;padding:8px 10px;margin-bottom:8px;box-shadow:2px 2px 0 #0004;font-size:12px}
+.abub:after{content:"";position:absolute;right:44px;bottom:-9px;border:8px solid transparent;border-top-color:#000;border-bottom:0}
+.abt{display:flex;gap:6px;margin-top:6px}.abt button{font:11px Tahoma;border:1px outset #fff;background:#ece9d8;cursor:pointer}
+#atomy canvas{background:none;border:0;width:120px;height:120px;cursor:pointer}
 </style></head><body>
 <div id="desktop"><div id="icons"></div>
 <div id="win" class="win">
-<div class="tbar"><span class="ti">⚛ Molecular Explorer</span><span class="ctl"><b data-c="min">_</b><b data-c="max">□</b><b data-c="x">✕</b></span></div>
-<div id="menu"><span>File</span><span>Edit</span><span>View</span><span id="mf">Favorites</span><span>Tools</span><span id="mh">Help</span></div>
+<div class="tbar"><span class="ti">⚛ Molecular Explorer</span><span class="ctl"><b data-c="min" role="button" tabindex="0" aria-label="Minimize window" title="Minimize"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 8h8"/></svg></b><b data-c="max" role="button" tabindex="0" aria-label="Maximize window" title="Maximize"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="1" width="8" height="8"/></svg></b><b data-c="x" role="button" tabindex="0" aria-label="Close window" title="Close"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l8 8M9 1L1 9"/></svg></b></span></div>
+<div id="menu"><span id="mf" role="button" tabindex="0">Favorites</span><span id="mh" role="button" tabindex="0">Help</span></div>
 <div id="tabs"></div>
 <div id="tool">
 <button class="btn" id="bk">◀ Back</button><button class="btn" id="fw">Forward ▶</button><button class="btn" id="rf">⟳ Refresh</button><button class="btn" id="hm">🏠 Home</button><button class="btn" id="sd">★ Favorites</button>
@@ -157,7 +203,7 @@ e:[["C",.67,0,0],["C",-.67,0,0],["H",1.24,.92,0],["H",1.24,-.92,0],["H",-1.24,.9
 bz:[...[0,1,2,3,4,5].flatMap(i=>{let a=i*Math.PI/3;return[["C",1.4*Math.cos(a),1.4*Math.sin(a),0],["H",2.48*Math.cos(a),2.48*Math.sin(a),0]]})]};
 const CATS=["Inorganic","Organic","Element","Biomolecule","Drug","Salt","Vitamin"];
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-let tabs=[],act=null,uid=0,favs=[],raf=0,dragId=null;
+let tabs=[],act=null,uid=0,favs=[],raf=0,dragId=null,kickV=()=>{},wakeWA=()=>{},wa=null,AT=null,navN=0;
 try{favs=JSON.parse(localStorage.getItem("mx_favs")||"[]")}catch(e){}
 function saveFav(){try{localStorage.setItem("mx_favs",JSON.stringify(favs))}catch(e){}}
 const find=n=>DB.find(m=>m[0]===n);
@@ -189,11 +235,11 @@ function closeTab(id){const i=tabs.findIndex(t=>t.id===id);tabs.splice(i,1);
  if(!tabs.length)return newTab();if(act===id)act=tabs[Math.min(i,tabs.length-1)].id;draw()}
 function draw(){drawTabs();const t=cur(),s=st(t);$("#ai").value=addr(s);document.title=title(s)+" - Molecular Explorer";
  $("#bk").disabled=t.i<1;$("#fw").disabled=t.i>=t.h.length-1;
- const p=$("#page");cancelAnimationFrame(raf);
+ const p=$("#page");cancelAnimationFrame(raf);raf=0;kickV=()=>{};
  p.innerHTML=s.v==="home"?home():s.v==="res"?results(s.q):molPage(s.m);p.scrollTop=0;wire();drawSide();
- if(s.v==="mol")viewer(find(s.m))}
+ if(s.v==="mol")viewer(find(s.m));else if(s.v==="home")orbits();atomyPage(s)}
 function sbox(v){return `<div class="sb"><input class="q" value="${esc(v||"")}" placeholder="Search molecules, e.g. caffeine, H2O, vinegar..." autocomplete="off"><div class="sug"></div></div>`}
-function home(){const d=DB[Math.floor(Date.now()/864e5)%DB.length];
+function homeOld(){const d=DB[Math.floor(Date.now()/864e5)%DB.length];
  return `<div class="home"><div class="logo">Molecular Explorer<small>~ The Web's #1 Molecule Search Engine ~ est. 1997 ~</small></div>
  ${sbox()}<div><button class="b95" data-act="s">Molecule Search</button><button class="b95" data-act="l">I'm Feeling Lucky</button><button class="b95" data-act="all">Browse All</button></div>
  <div class="mq"><marquee scrollamount="5">★ Welcome to Molecular Explorer! ★ Over ${DB.length} molecules indexed! ★ Drag tabs to rearrange them! ★ Sign our guestbook! ★</marquee></div>
@@ -228,17 +274,17 @@ function wire(){const p=$("#page"),inp=p.querySelector(".q");
  p.onclick=e=>{const a=e.target.closest("[data-m],[data-q],[data-act],[data-fav],#sp");if(!a)return;
   if(a.dataset.m)go({v:"mol",m:a.dataset.m});else if(a.dataset.q)go({v:"res",q:a.dataset.q});
   else if(a.dataset.fav){const n=a.dataset.fav;favs=favs.includes(n)?favs.filter(x=>x!==n):[...favs,n];saveFav();draw()}
-  else if(a.id==="sp"){spin=!spin;a.textContent=spin?"Pause":"Resume"}
+  else if(a.id==="sp"){spin=!spin;kickV();a.textContent=spin?"Pause":"Resume"}
   else{const k=a.dataset.act;if(k==="s")doS();else if(k==="l")go({v:"mol",m:DB[Math.floor(Math.random()*DB.length)][0]});
    else if(k==="all")go({v:"res",q:"a"});else if(k==="home")go({v:"home"});else if(k==="print")window.print()}}}
 let spin=true;
 function viewer(m){const cv=$("#cv");if(!cv)return;const ctx=cv.getContext("2d"),at=XYZ[m[8]];spin=true;
  let ax=.4,ay=0,dr=false,lx,ly;const W=cv.width,H=cv.height,sc=Math.min(W,H)/(at.reduce((a,b)=>Math.max(a,Math.hypot(b[1],b[2],b[3])),0)+1.2)/2.4*1.1;
- cv.onmousedown=e=>{dr=true;lx=e.clientX;ly=e.clientY};window.onmouseup=()=>dr=false;
+ cv.onmousedown=e=>{dr=true;kickV();lx=e.clientX;ly=e.clientY};window.onmouseup=()=>dr=false;
  cv.onmousemove=e=>{if(dr){ay+=(e.clientX-lx)*.01;ax+=(e.clientY-ly)*.01;lx=e.clientX;ly=e.clientY}};
- cv.ontouchstart=e=>{dr=true;lx=e.touches[0].clientX;ly=e.touches[0].clientY};cv.ontouchend=()=>dr=false;
+ cv.ontouchstart=e=>{dr=true;kickV();lx=e.touches[0].clientX;ly=e.touches[0].clientY};cv.ontouchend=()=>dr=false;
  cv.ontouchmove=e=>{e.preventDefault();ay+=(e.touches[0].clientX-lx)*.01;ax+=(e.touches[0].clientY-ly)*.01;lx=e.touches[0].clientX;ly=e.touches[0].clientY};
- (function f(){if(spin&&!dr)ay+=.012;ctx.clearRect(0,0,W,H);
+ let dirty=1;const need=()=>!(bw.min||document.hidden)&&(spin||dr||dirty);function f(){raf=0;if(!need())return;dirty=0;if(spin&&!dr)ay+=.012;ctx.clearRect(0,0,W,H);
   const P=at.map(([el,x,y,z])=>{let a=x*Math.cos(ay)+z*Math.sin(ay),c=-x*Math.sin(ay)+z*Math.cos(ay),b=y*Math.cos(ax)-c*Math.sin(ax),d=y*Math.sin(ax)+c*Math.cos(ax);
    return{el,x:W/2+a*sc*2,y:H/2+b*sc*2,z:d}});
   const items=[];P.forEach((a,i)=>{items.push({t:"a",z:a.z,a});for(let j=i+1;j<P.length;j++){const o=at[i],q=at[j];
@@ -246,7 +292,7 @@ function viewer(m){const cv=$("#cv");if(!cv)return;const ctx=cv.getContext("2d")
   items.sort((p,q)=>p.z-q.z).forEach(it=>{if(it.t==="b"){ctx.strokeStyle="#bbb";ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(it.a.x,it.a.y);ctx.lineTo(it.b.x,it.b.y);ctx.stroke()}
    else{const a=it.a,r=(a.el==="H"?11:17)*(1+a.z*.08),g=ctx.createRadialGradient(a.x-r/3,a.y-r/3,1,a.x,a.y,r);g.addColorStop(0,"#fff");g.addColorStop(.35,COL[a.el]);g.addColorStop(1,"#000");
     ctx.fillStyle=g;ctx.beginPath();ctx.arc(a.x,a.y,r,0,7);ctx.fill()}});
-  raf=requestAnimationFrame(f)})()}
+  if(need())raf=requestAnimationFrame(f)}kickV=()=>{dirty=1;if(!raf)raf=requestAnimationFrame(f)};kickV()}
 function drawSide(){const s=$("#side");s.innerHTML=`<h4>★ Favorites</h4>`+(favs.length?favs.map(n=>`<a data-fm="${esc(n)}">🧪 ${esc(n)}</a>`).join(""):"<i>No favorites yet. Open a molecule and click ☆.</i>");
  s.querySelectorAll("[data-fm]").forEach(a=>a.onclick=()=>go({v:"mol",m:a.dataset.fm}))}
 function nav(d){const t=cur(),n=t.i+d;if(n>=0&&n<t.h.length){t.i=n;load(t)}}
@@ -263,25 +309,22 @@ newTab();
 
 // ===== Desktop / window manager =====
 const dsk=$("#desktop"),tasks=$("#tasks"),sm=$("#startmenu"),wins=[];let zi=10,cf=null,bw;
-const APPS=[{id:"browser",n:"Molecular Explorer",i:"⚛️"},{id:"note",n:"Sticky Notes",i:"📝"},{id:"paint",n:"Paint",i:"🎨"},{id:"mine",n:"Minesweeper",i:"💣"}];
-const IMG={browser:"molecular_explorer",note:"sticky_note_icon",paint:"ms_paint",mine:"minesweeper"};
-const IC=(id,z)=>{const a=APPS.find(x=>x.id===id);return `<img src="Image/${IMG[id]}.png" alt="${a.i}" width="${z}" height="${z}" style="vertical-align:middle;object-fit:contain" onerror="this.replaceWith(this.alt)">`};
-const ICE=(e,z)=>{const a=APPS.find(x=>x.i===e);return a?IC(a.id,z):e};
-const TB=(t,i)=>`<div class="tbar"><span class="ti">${ICE(i,16)} ${t}</span><span class="ctl"><b data-c="min">_</b><b data-c="max">□</b><b data-c="x">✕</b></span></div>`;
+const APPS=[{id:"browser",n:"Molecular Explorer",i:"⚛️"},{id:"note",n:"Sticky Notes",i:"📝"},{id:"paint",n:"Paint",i:"🎨"},{id:"mine",n:"Minesweeper",i:"💣"}];APPS.push({id:"winamp",n:"Winamp",i:"🎵"},{id:"atomy",n:"Atomy",i:"🔬"});
+const TB=(t,i)=>`<div class="tbar"><span class="ti">${i} ${t}</span><span class="ctl"><b data-c="min" role="button" tabindex="0" aria-label="Minimize window" title="Minimize"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 8h8"/></svg></b><b data-c="max" role="button" tabindex="0" aria-label="Maximize window" title="Maximize"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="1" y="1" width="8" height="8"/></svg></b><b data-c="x" role="button" tabindex="0" aria-label="Close window" title="Close"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l8 8M9 1L1 9"/></svg></b></span></div>`;
 function focusW(w){cf=w;zi++;w.el.style.zIndex=zi;wins.forEach(x=>{x.btn.classList.toggle("on",x===w&&!w.min)})}
-function showW(w){w.min=false;w.el.classList.remove("hid");focusW(w)}
+function showW(w){w.min=false;setTimeout(()=>{kickV();wakeWA()},0);w.el.classList.remove("hid");focusW(w)}
 function miniW(w){w.min=true;w.el.classList.add("hid");w.btn.classList.remove("on");if(cf===w)cf=null}
 function maxiW(w){const e=w.el,b=e.querySelector("[data-c=max]");
  if(!w.max){w.r=[e.style.left,e.style.top,e.style.width,e.style.height];Object.assign(e.style,{left:"0",top:"0",width:"100%",height:"100%"});e.classList.add("max");w.max=true}
  else{[e.style.left,e.style.top,e.style.width,e.style.height]=w.r;e.classList.remove("max");w.max=false}
- if(b)b.textContent=w.max?"❐":"□"}
+ if(b){b.innerHTML=w.max?SV.rs:SV.mx;b.setAttribute("aria-label",w.max?"Restore window":"Maximize window")}}
 function closeW(w){if(w.o.onclose)w.o.onclose();
  if(w.o.keep){w.el.classList.add("hid");w.closed=true;w.btn.remove()}else{w.el.remove();w.btn.remove();wins.splice(wins.indexOf(w),1)}
  if(cf===w)cf=null}
 function reg(el,o){const w={el,o,min:false,max:false,btn:document.createElement("div")};wins.push(w);
  const n=(wins.length%8)*26;el.classList.add("w");el.style.left=(o.x??30+n)+"px";el.style.top=(o.y??20+n)+"px";
  if(o.w){el.style.width=o.w+"px";el.style.height=o.h+"px"}dsk.appendChild(el);
- w.btn.className="task";w.btn.innerHTML=`<span>${ICE(o.icon,16)}</span> ${esc(o.title)}`;
+ w.btn.className="task";w.btn.innerHTML=`<span>${o.icon}</span> ${esc(o.title)}`;
  w.btn.onclick=()=>{if(w.min)showW(w);else if(cf===w)miniW(w);else focusW(w)};tasks.appendChild(w.btn);
  el.addEventListener("pointerdown",()=>{if(cf!==w)focusW(w)},true);
  el.addEventListener("click",e=>{const c=e.target.closest("[data-c]");if(!c)return;({min:()=>miniW(w),max:()=>!o.nomax&&maxiW(w),x:()=>closeW(w)})[c.dataset.c]()});
@@ -301,22 +344,22 @@ function reg(el,o){const w={el,o,min:false,max:false,btn:document.createElement(
     up=()=>{document.removeEventListener("pointermove",mv);document.removeEventListener("pointerup",up)};
    document.addEventListener("pointermove",mv);document.addEventListener("pointerup",up);e.preventDefault()})}
  focusW(w);return w}
-function launch(id){sm.classList.remove("on");$("#start").classList.remove("on");
- ({browser:()=>{if(bw.closed){bw.closed=false;tasks.appendChild(bw.btn)}showW(bw)},note,paint,mine})[id]()}
+function launch(id){atomyOn(id);sm.classList.remove("on");$("#start").classList.remove("on");
+ ({browser:()=>{if(bw.closed){bw.closed=false;tasks.appendChild(bw.btn)}showW(bw)},note,paint,mine,winamp:wamp,atomy:atomyShow})[id]()}
 
 // ===== Icons, start menu, search =====
 let lastIc=0,lastT=0;
-$("#icons").innerHTML=APPS.map(a=>`<div class="ic" data-id="${a.id}"><span>${IC(a.id,44)}</span>${a.n}</div>`).join("");
+$("#icons").innerHTML=APPS.map(a=>`<div class="ic" data-id="${a.id}"><span>${a.i}</span>${a.n}</div>`).join("");
 $("#icons").onclick=e=>{const c=e.target.closest(".ic");if(!c)return;document.querySelectorAll(".ic").forEach(x=>x.classList.toggle("sel",x===c));
  const n=Date.now();if(lastIc===c.dataset.id&&n-lastT<450)launch(c.dataset.id);lastIc=c.dataset.id;lastT=n};
 dsk.addEventListener("pointerdown",e=>{if(!e.target.closest(".ic"))document.querySelectorAll(".ic").forEach(x=>x.classList.remove("sel"))});
-sm.innerHTML=`<div class="sh">👤 Molecular User</div>`+APPS.map(a=>`<div class="si" data-id="${a.id}">${IC(a.id,24)} ${a.n}</div>`).join("")+`<div class="si" id="sdsk">🖥 Show Desktop</div>`;
+sm.innerHTML=`<div class="sh">👤 Molecular User</div>`+APPS.map(a=>`<div class="si" data-id="${a.id}">${a.i} ${a.n}</div>`).join("")+`<div class="si" id="sdsk">🖥 Show Desktop</div>`;
 sm.onclick=e=>{const d=e.target.closest("[data-id]");if(d)launch(d.dataset.id);else if(e.target.closest("#sdsk")){wins.forEach(miniW);sm.classList.remove("on")}};
 $("#start").onclick=()=>{sm.classList.toggle("on");$("#start").classList.toggle("on")};
 const ts=$("#tsearch"),tr=$("#tsres");
 const runS=id=>{launch(id);ts.value="";tr.style.display="none"};
 ts.oninput=()=>{const v=ts.value.toLowerCase().trim(),r=v?APPS.filter(a=>a.n.toLowerCase().includes(v)||a.id.includes(v)):[];
- tr.innerHTML=r.map(a=>`<div class="si" data-id="${a.id}">${IC(a.id,24)} ${a.n}</div>`).join("")||'<div class="si">No apps found</div>';tr.style.display=v?"block":"none"};
+ tr.innerHTML=r.map(a=>`<div class="si" data-id="${a.id}">${a.i} ${a.n}</div>`).join("")||'<div class="si">No apps found</div>';tr.style.display=v?"block":"none"};
 ts.onkeydown=e=>{if(e.key==="Enter"){const f=tr.querySelector("[data-id]");if(f)runS(f.dataset.id)}};
 tr.onclick=e=>{const d=e.target.closest("[data-id]");if(d)runS(d.dataset.id)};
 document.addEventListener("pointerdown",e=>{if(!e.target.closest("#startmenu,#start")){sm.classList.remove("on");$("#start").classList.remove("on")}if(!e.target.closest("#tsres,#tsearch"))tr.style.display="none"});
@@ -325,7 +368,7 @@ const tick=()=>$("#tclk").textContent=new Date().toLocaleTimeString([],{hour:"2-
 // ===== Sticky notes =====
 let nn=0;
 function note(){const el=document.createElement("div");el.className="note";const k=++nn;
- el.innerHTML=`<div class="nbar"><span class="ctl"><b data-c="min">_</b><b data-c="x">✕</b></span></div><textarea spellcheck="false" placeholder="Write something..."></textarea>`;
+ el.innerHTML=`<div class="nbar"><span class="ctl"><b data-c="min" role="button" tabindex="0" aria-label="Minimize window" title="Minimize"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 8h8"/></svg></b><b data-c="x" role="button" tabindex="0" aria-label="Close window" title="Close"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l8 8M9 1L1 9"/></svg></b></span></div><textarea spellcheck="false" placeholder="Write something..."></textarea>`;
  const im=new Image();im.onerror=()=>el.classList.add("fb");im.src="Image/sticky_note.png";
  reg(el,{title:"Note "+k,icon:"📝",handle:".nbar",nores:true,nomax:true,x:260+k%6*30,y:60+k%6*30});el.querySelector("textarea").focus()}
 
@@ -335,9 +378,9 @@ function fill(c,x,y,hex){const W=c.canvas.width,H=c.canvas.height,d=c.getImageDa
  while(s.length){const[p,q]=s.pop();if(p<0||q<0||p>=W||q>=H)continue;const i=(q*W+p)*4;if(a[i]!=t[0]||a[i+1]!=t[1]||a[i+2]!=t[2])continue;a[i]=n[0];a[i+1]=n[1];a[i+2]=n[2];s.push([p+1,q],[p-1,q],[p,q+1],[p,q-1])}
  c.putImageData(d,0,0)}
 function paint(){const el=document.createElement("div");el.className="win";
- const T=[["p","✏️","Pencil"],["b","🖌️","Brush"],["e","🧽","Eraser"],["l","╱","Line"],["r","▭","Rectangle"],["o","◯","Ellipse"],["f","🪣","Fill"]];
- const PAL="#000000 #808080 #800000 #808000 #008000 #008080 #000080 #800080 #ffffff #c0c0c0 #ff0000 #ffff00 #00ff00 #00ffff #0000ff #ff00ff #ff8000 #8b4513 #ffc0cb #7fff00".split(" ");
- el.innerHTML=TB("untitled - Paint","🎨")+`<div class="pt">${T.map(t=>`<button class="btn" data-t="${t[0]}" title="${t[2]}">${t[1]}</button>`).join("")}<select class="sz"><option>2<option selected>4<option>8<option>16</select><button class="btn" data-a="n">🗋 New</button><button class="btn" data-a="s">💾 Save</button><i class="cur" style="width:22px;height:22px;border:2px inset #fff;background:#000"></i></div><div class="pc"><canvas width="900" height="560"></canvas></div><div class="pal">${PAL.map(c=>`<i style="background:${c}" data-c2="${c}"></i>`).join("")}</div>`;
+ const IC2=p=>'<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';const T=[["p",IC2('<path d="M4 20l1-5L16 4l4 4L9 19z"/>'),"Pencil"],["b",IC2('<path d="M5 20h14M8 15l6-9 4 3-6 9H8z"/>'),"Marker"],["e",IC2('<path d="M5 14l7-8 7 5-7 8H8z"/>'),"Eraser"],["l",IC2('<path d="M5 19L19 5"/>'),"Line"],["r",IC2('<rect x="3" y="6" width="18" height="12" rx="1"/>'),"Rectangle"],["o",IC2('<circle cx="12" cy="12" r="8"/>'),"Ellipse"],["f",IC2('<path d="M5 12l7-7 7 7-7 7zM20 16v3"/>'),"Fill"]];
+ const HX=h=>"#"+[0,8,4].map(n=>{const k=(n+h/30)%12;return Math.round(255*(.5-.375*Math.max(-1,Math.min(k-3,9-k,1)))).toString(16).padStart(2,"0")}).join("");const PAL=[...Array.from({length:32},(_,i)=>HX(i*11.25)),"#000000","#444444","#888888","#cccccc","#ffffff"];
+ el.innerHTML=TB("untitled - ms-paint.exe","🎨")+`<div class="pt">${T.map(t=>`<button class="btn" data-t="${t[0]}" title="${t[2]}" aria-label="${t[2]}">${t[1]}</button>`).join("")}<select class="sz" aria-label="Brush size"><option>4<option>10<option selected>20<option>30</select><button class="btn" data-a="n">New</button><button class="btn" data-a="s">Save</button><i class="cur" style="width:22px;height:22px;border:2px inset #fff;background:#000"></i></div><div class="pc"><canvas width="900" height="560"></canvas></div><div class="pal">${PAL.map(c=>`<i style="background:${c}" data-c2="${c}"></i>`).join("")}</div>`;
  reg(el,{title:"Paint",icon:"🎨",w:Math.min(760,dsk.clientWidth-20),h:Math.min(540,dsk.clientHeight-20)});
  const cv=el.querySelector("canvas"),c=cv.getContext("2d"),sz=el.querySelector(".sz");let tool="p",col="#000000",dn=0,sx,sy,snap;
  const clr=()=>{c.fillStyle="#fff";c.fillRect(0,0,cv.width,cv.height)};clr();
@@ -377,8 +420,90 @@ function mine(){const N=81,K=10,NC=["","#00f","#080","#f00","#008","#800","#088"
  gr.oncontextmenu=e=>{e.preventDefault();const i=+e.target.dataset.i;if(!isNaN(i)&&!over)clk(i,true)};
  q(".face").onclick=reset;reset()}
 
+
+// ===== v2 additions =====
+const SVG=(p,s=10)=>`<svg width="${s}" height="${s}" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">${p}</svg>`;
+const SV={mx:SVG('<rect x="1" y="1" width="8" height="8"/>'),rs:SVG('<path d="M3 3V1h6v6H7M1 3h6v6H1z"/>')};
+document.addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.matches&&e.target.matches("[data-c],#mf,#mh")){e.preventDefault();e.target.click()}});
+document.addEventListener("visibilitychange",()=>{kickV();wakeWA()});
+
+// --- new home page: electrons step once every 5 frames, each on a different frame ---
+function home(){const d=DB[Math.floor(Date.now()/864e5)%DB.length],n=1337+Math.floor(Date.now()/36e5)%9000,e=Math.floor(Math.log10(n)),
+ ec=(i,rx,ry,r,c)=>`<circle data-o data-i="${i}" data-rx="${rx}" data-ry="${ry}" data-r="${r}" data-c="${c}" r="4" fill="#fff" stroke="#d22" stroke-width="2"/>`,
+ ol=r=>`<ellipse rx="70" ry="24" transform="rotate(${r})" fill="none" stroke="#8a95c8" stroke-width="1.5"/>`;
+ return `<div class="home2"><svg class="orb" viewBox="0 0 900 900" aria-hidden="true"><circle cx="450" cy="450" r="440" fill="none" stroke="#9aa8d8" stroke-width="3"/>${ec(3,440,440,0,450)}${ec(4,440,440,0,450)}</svg>
+ <svg class="atm" viewBox="-100 -100 200 200" aria-hidden="true">${ol(90)}${ol(25)}${ol(-25)}<circle r="5" fill="#2a9d2a"/>${ec(0,70,24,90,0)}${ec(1,70,24,25,0)}${ec(2,70,24,-25,0)}</svg>
+ <div class="logo2">Molecular Explorer</div><div class="sub2">The World's #1 Molecule Search Engine</div>
+ ${sbox().replace('<div class="sug">','<span class="arr" data-act="s" role="button" aria-label="Search">→</span><div class="sug">')}
+ <div><button class="b95" data-act="all">Browse All</button><button class="b95" data-act="l">I'm Feeling Lucky</button></div>
+ <div class="bx2"><b>New ! - Molecule of the Day : <a data-m="${esc(d[0])}">${esc(d[0])}</a> (${d[1]})</b></div>
+ <div class="vis">You are visitor number <b>${(n/10**e).toFixed(1)} × 10<sup>${e}</sup></b></div>
+ <marquee class="mq2" scrollamount="5">⟵ - - - - Welcome to Molecular Explorer! Over ${DB.length} molecules indexed! - - - - ⟵</marquee></div>`}
+function orbits(){const E=[...document.querySelectorAll("[data-o]")].map(el=>({el,i:+el.dataset.i,t:el.dataset.i*2.1,rx:+el.dataset.rx,ry:+el.dataset.ry,r:el.dataset.r*Math.PI/180,c:+el.dataset.c}));
+ const put=o=>{const x=o.rx*Math.cos(o.t),y=o.ry*Math.sin(o.t);o.el.setAttribute("cx",o.c+x*Math.cos(o.r)-y*Math.sin(o.r));o.el.setAttribute("cy",o.c+x*Math.sin(o.r)+y*Math.cos(o.r))};
+ E.forEach(put);let fr=0;
+ const f=()=>{raf=0;if(bw.min||document.hidden)return;fr++;E.forEach(o=>{if((fr+o.i*2)%5===0){o.t+=.3;put(o)}});raf=requestAnimationFrame(f)};
+ kickV=()=>{if(!raf)raf=requestAnimationFrame(f)};kickV()}
+
+// --- Winamp (light theme, synthesized chiptune, no audio files needed) ---
+const TR=[["Molecular Beats","CHIPTUNE",[0,4,7,12,7,4,9,12],140],["Electron Dance","SAWWAVE",[0,3,7,10,12,10,7,3],160],["Covalent Groove","SLOWJAM",[0,5,9,5,12,9,7,2],110]];
+function wamp(){if(wa&&wins.includes(wa))return showW(wa);
+ const el=document.createElement("div");el.className="win wa";
+ el.innerHTML=TB("winamp.exe","🎵")+`<div class="wab"><div class="walcd"><div class="wat"></div><div class="wav">${"<i></i>".repeat(16)}</div></div>
+ <div class="wari"><div class="wabx wtitle"></div><div class="war"><b class="wabx">320</b> kbps <b class="wabx">44</b> Hz</div>
+ <div class="wsl"><input type="range" class="wvol" min="0" max="100" value="70" aria-label="Volume" style="accent-color:#e8a020"><input type="range" class="wbal" min="0" max="100" value="50" aria-label="Balance" style="accent-color:#3c9a3c"><button class="wtg" data-t="m" aria-label="Mute" aria-pressed="false"></button><button class="wtg" data-t="f" aria-label="Faster tempo" aria-pressed="false"></button></div></div>
+ <div class="wabt"><button data-k="pv" aria-label="Previous track">⏮</button><button data-k="pl" aria-label="Play">▶</button><button data-k="pa" aria-label="Pause">⏸</button><button data-k="st" aria-label="Stop">⏹</button><button data-k="nx" aria-label="Next track">⏭</button></div></div>`;
+ el.querySelector("[data-c=max]").remove();
+ let ac,an,gn,pn,tm,ti=0,sp=0,play=0,mute=0,fast=0,r2=0;const d=new Uint8Array(32),q=s=>el.querySelector(s),bars=[...el.querySelectorAll(".wav i")],H0=bars.map((_,i)=>20+i*37%40);
+ const tick=()=>q(".wat").textContent=new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit",hour12:false}).replace(":"," : ");tick();const ck=setInterval(tick,1000);
+ const ttl=()=>q(".wtitle").textContent=`${ti+1}. ${TR[ti][0]} - ${[...TR[ti][1]].join(">")}`;ttl();
+ const vol=()=>{if(gn)gn.gain.value=mute?0:q(".wvol").value/100*.6;if(pn)pn.pan.value=(q(".wbal").value-50)/50};
+ const ctx=()=>{if(!ac){ac=new(window.AudioContext||window.webkitAudioContext)();an=ac.createAnalyser();an.fftSize=64;gn=ac.createGain();pn=ac.createStereoPanner();gn.connect(pn);pn.connect(an);an.connect(ac.destination);vol()}return ac};
+ const note=()=>{const ns=TR[ti][2],n=ns[sp++%ns.length],o=ac.createOscillator(),g=ac.createGain(),T=ac.currentTime;o.type=ti===1?"sawtooth":"square";o.frequency.value=220*2**(n/12);g.gain.setValueAtTime(.25,T);g.gain.exponentialRampToValueAtTime(.001,T+.22);o.connect(g);g.connect(gn);o.start();o.stop(T+.25)};
+ const viz=()=>{if(r2)return;const f=()=>{r2=0;if(wa.min||document.hidden)return;if(play)an.getByteFrequencyData(d);bars.forEach((b,i)=>b.style.height=(play?Math.max(10,d[i]/2.55):H0[i])+"%");if(play)r2=requestAnimationFrame(f)};r2=requestAnimationFrame(f)};
+ const start=()=>{ctx().resume();clearInterval(tm);tm=setInterval(note,60000/(TR[ti][3]*(fast?1.5:1))/2);play=1;viz()};
+ const stop=z=>{clearInterval(tm);play=0;if(z)sp=0;viz()};
+ const jump=k=>{ti=(ti+k+TR.length)%TR.length;sp=0;ttl();if(play)start()};
+ el.addEventListener("click",e=>{const b=e.target.closest("[data-k],[data-t]");if(!b)return;
+  if(b.dataset.t){const on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);if(b.dataset.t==="m")mute=on;else{fast=on;if(play)start()}vol();return}
+  ({pl:start,pa:()=>stop(0),st:()=>stop(1),pv:()=>jump(-1),nx:()=>jump(1)})[b.dataset.k]()});
+ el.addEventListener("input",vol);
+ wa=reg(el,{title:"Winamp",icon:"🎵",w:500,h:250,nores:true,nomax:true,onclose:()=>{clearInterval(tm);clearInterval(ck);if(ac)ac.close();wa=null;wakeWA=()=>{}}});
+ wakeWA=()=>{if(play)viz()};viz()}
+
+// --- Atomy the lab assistant (faux-3D atom with googly eyes, Clippy-style) ---
+const FACTS=["Water expands when it freezes, which is why ice floats!","Atoms are almost entirely empty space.","Caffeine blocks adenosine, the molecule that makes you sleepy.","Benzene's ring shape was famously pictured by Kekulé in a daydream.","Methane is a tetrahedron: four hydrogens around one carbon.","Table salt is a cubic crystal, not tiny molecules."];
+function atomyInit(){const el=document.createElement("div");el.id="atomy";
+ el.innerHTML=`<div class="abub" role="status" aria-live="polite"><div class="atx"></div><div class="abt"><button data-a="f">Fun fact</button><button data-a="h">Hide</button></div></div><canvas width="120" height="120" role="img" aria-label="Atomy, the lab assistant"></canvas>`;dsk.appendChild(el);
+ const cv=el.querySelector("canvas"),c=cv.getContext("2d"),bub=el.querySelector(".abub"),tx=el.querySelector(".atx");
+ let t=0,last=0,mx=0,my=0;const P=[{x:0,y:0,vx:0,vy:0,k:.25},{x:0,y:0,vx:0,vy:0,k:.17}],OR=[0,60,120].map(a=>a*Math.PI/180);
+ document.addEventListener("pointermove",e=>{mx=e.clientX;my=e.clientY});
+ const say=(s,ms=7000)=>{if(AT.off)return;tx.textContent=s;bub.style.display="block";clearTimeout(AT.to);AT.to=setTimeout(()=>bub.style.display="none",ms)};
+ const loop=ts=>{if(AT.off)return;requestAnimationFrame(loop);if(ts-last<50)return;last=ts;t+=.07;
+  const r=cv.getBoundingClientRect(),dx=mx-r.left-60,dy=my-r.top-60,dd=Math.hypot(dx,dy)||1,k=Math.min(3.5,dd/40),tg=[dx/dd*k,dy/dd*k+1.5];
+  P.forEach(p=>{p.vx=(p.vx+(tg[0]-p.x)*p.k)*.7;p.vy=(p.vy+(tg[1]-p.y)*p.k)*.7;p.x+=p.vx;p.y+=p.vy});
+  c.setTransform(1,0,0,1,60,60);c.clearRect(-60,-60,120,120);
+  const E=OR.map((a,i)=>{const th=t*(1+i*.3)+i*2.1,ra=a+t*.02,x=50*Math.cos(th),y=16*Math.sin(th);return{x:x*Math.cos(ra)-y*Math.sin(ra),y:x*Math.sin(ra)+y*Math.cos(ra),z:Math.sin(th)}});
+  OR.forEach(a=>{c.beginPath();c.ellipse(0,0,50,16,a+t*.02,0,7);c.strokeStyle="#7aa2e8";c.lineWidth=1.5;c.stroke()});
+  const el_=e=>{c.fillStyle="#e22";c.beginPath();c.arc(e.x,e.y,4+e.z*1.2,0,7);c.fill()};
+  E.filter(e=>e.z<0).forEach(el_);
+  const by=Math.sin(t*.8)*2,g=c.createRadialGradient(-8,by-9,2,0,by,24);g.addColorStop(0,"#d8ecff");g.addColorStop(1,"#2a7ad8");
+  c.fillStyle=g;c.beginPath();c.arc(0,by,23,0,7);c.fill();
+  const bl=t%9<.35;[-9,9].forEach((x,i)=>{c.fillStyle="#fff";c.strokeStyle="#234";c.lineWidth=1;c.beginPath();c.arc(x,by-5,8.5,0,7);c.fill();c.stroke();
+   if(bl){c.beginPath();c.moveTo(x-8,by-5);c.lineTo(x+8,by-5);c.stroke()}else{c.fillStyle="#000";c.beginPath();c.arc(x+Math.max(-4,Math.min(4,P[i].x)),by-5+Math.max(-4,Math.min(4,P[i].y)),3.6,0,7);c.fill()}});
+  c.strokeStyle="#123";c.lineWidth=2;c.beginPath();if(bub.style.display==="block")c.ellipse(0,by+10,5,3+Math.abs(Math.sin(t*3))*2,0,0,7);else c.arc(0,by+6,8,.25,Math.PI-.25);c.stroke();
+  E.filter(e=>e.z>=0).forEach(el_)};
+ AT={el,off:false,say,to:0,show(){el.style.display="flex";AT.off=false;requestAnimationFrame(loop);say("I'm back! Did you miss me?",4000)}};
+ bub.onclick=e=>{const a=e.target.dataset.a;if(a==="f")say(FACTS[Math.random()*FACTS.length|0],9000);else if(a==="h"){AT.off=true;el.style.display="none"}};
+ cv.onclick=()=>say("It looks like you're studying molecules! Would you like help?");
+ requestAnimationFrame(loop);setTimeout(()=>say("Hi! I'm Atomy, your lab assistant. It looks like you're searching for a molecule. Would you like help?",9000),700)}
+function atomyShow(){if(AT&&AT.off)AT.show();else if(AT)AT.say("I'm right here!",3000)}
+function atomyOn(id){const m={paint:"It looks like you're drawing a molecule! Need a hand?",mine:"Careful... mines are just very angry molecules.",winamp:"Ooh, tunes! Electrons love to dance.",note:"Taking notes? I'd help, but I'm an atom.",browser:"Let's go find some molecules!"};if(AT&&!AT.off&&m[id])AT.say(m[id],5000)}
+function atomyPage(s){if(!AT||AT.off)return;
+ if(s.v==="mol"){if(++navN%3===1){const m=find(s.m);AT.say(`Ooh, ${m[0]}! ${m[6]}`,9000)}}
+ else if(s.v==="res"&&s.q&&!search(s.q).length)AT.say("Hmm, nothing found. Try 'water' or 'caffeine'!")}
+
 // ===== Boot =====
 bw=reg($("#win"),{title:"Molecular Explorer",icon:"⚛️",x:110,y:20,w:Math.min(940,dsk.clientWidth-130),h:dsk.clientHeight-50,keep:true});
-$("#win .ti").innerHTML=IC("browser",16)+" Molecular Explorer";
-if(dsk.clientWidth<700)maxiW(bw);
+if(dsk.clientWidth<700)maxiW(bw);atomyInit();
 </script></body></html>
